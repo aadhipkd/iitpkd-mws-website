@@ -1,5 +1,6 @@
 ---
 import BlockView from "./BlockView.astro";
+import { withBase } from "../lib/base";
 
 interface Block {
   type: string;
@@ -85,7 +86,7 @@ const sectionClass = (name?: string) =>
                   {block.links && block.links.length > 0 ? (
                     <ul class="sidebar-links">
                       {block.links.map((link) => (
-                        <li><a href={link.href}>{link.label}</a></li>
+                        <li><a href={withBase(link.href)}>{link.label}</a></li>
                       ))}
                     </ul>
                   ) : block.text ? (
@@ -108,7 +109,7 @@ const sectionClass = (name?: string) =>
             )}
             <div class="services-list">
               {serviceRows.map((row) => (
-                <a href={row.links?.[0]?.href ?? "#"} class="service-row">
+                <a href={withBase(row.links?.[0]?.href ?? "#")} class="service-row">
                   <div class="service-row-icon" aria-hidden="true">
                     {row.icon === "monitor" && (
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -159,7 +160,7 @@ const sectionClass = (name?: string) =>
             {ctaButton && (
               <div class="cta-wrap">
                 <a
-                  href={ctaButton.links?.[0]?.href ?? "/contact"}
+                  href={withBase(ctaButton.links?.[0]?.href ?? "/contact")}
                   class="btn btn--accent"
                 >
                   {ctaButton.label ?? ctaButton.title}

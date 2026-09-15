@@ -9,6 +9,8 @@ interface Props {
   };
 }
 
+import { withBase } from "../lib/base";
+
 const { data } = Astro.props;
 
 const label = data?.label ?? "";
@@ -21,7 +23,7 @@ const heroImage = data?.image;
 <section class="hero" aria-label="Hero">
   <div class="hero-bg" aria-hidden="true">
     {heroImage ? (
-      <img src={heroImage} alt="" class="hero-image" />
+      <img src={withBase(heroImage)} alt="" class="hero-image" />
     ) : (
       <div class="hero-placeholder" aria-hidden="true"></div>
     )}
@@ -32,8 +34,8 @@ const heroImage = data?.image;
     <p class="hero-label">{label}</p>
     <h1 class="hero-title">{title}</h1>
     <div class="hero-actions">
-      <a href={primaryCta.href} class="btn btn--primary">{primaryCta.label}</a>
-      <a href={secondaryCta.href} class="btn btn--outline">{secondaryCta.label}</a>
+      <a href={withBase(primaryCta.href)} class="btn btn--primary">{primaryCta.label}</a>
+      <a href={withBase(secondaryCta.href)} class="btn btn--outline">{secondaryCta.label}</a>
     </div>
   </div>
 </section>

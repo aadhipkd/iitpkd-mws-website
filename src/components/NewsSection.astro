@@ -1,5 +1,6 @@
 ---
 import type { NewsItem } from "../lib/news";
+import { withBase } from "../lib/base";
 
 interface Props {
   data?: {
@@ -29,7 +30,7 @@ const newsItems = items.slice(0, 3);
         <span class="section-label">{label}</span>
         <h2 id="news-heading" class="section-title">{title}</h2>
       </div>
-      <a href={viewAllHref} class="btn btn--ghost">{viewAll}</a>
+      <a href={withBase(viewAllHref)} class="btn btn--ghost">{viewAll}</a>
     </div>
 
     <div class="news-grid">
@@ -37,12 +38,12 @@ const newsItems = items.slice(0, 3);
         <a
           class="news-card reveal"
           style={`--reveal-delay: ${Math.min(i, 5) * 70}ms`}
-          href={item.url}
+          href={withBase(item.url)}
           target="_blank"
           rel="noopener noreferrer"
         >
           {item.image && (
-            <img class="news-image" src={item.image} alt="" loading="lazy" />
+            <img class="news-image" src={withBase(item.image)} alt="" loading="lazy" />
           )}
           <div class="news-meta">
             <time class="news-date">{item.date}</time>

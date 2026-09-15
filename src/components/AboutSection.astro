@@ -10,6 +10,8 @@ interface Props {
   };
 }
 
+import { withBase } from "../lib/base";
+
 const { data } = Astro.props;
 
 const label = data?.label ?? "About the Section";
@@ -27,7 +29,7 @@ const stats = data?.stats ?? [];
         <span class="section-label">{label}</span>
         <h2 id="about-heading" class="section-title">{title}</h2>
         <p class="about-text">{text}</p>
-        <a href={ctaHref} class="btn btn--ghost" style="margin-top: var(--space-6);">
+        <a href={withBase(ctaHref)} class="btn btn--ghost" style="margin-top: var(--space-6);">
           {ctaLabel}
         </a>
       </div>

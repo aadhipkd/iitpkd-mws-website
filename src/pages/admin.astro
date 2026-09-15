@@ -3,6 +3,7 @@
 // Kept as an Astro page so the `/admin` route works in both the dev
 // server and static hosts (no directory-index confusion).
 // The CMS configuration lives in `public/admin/config.yml`.
+import { withBase } from "../lib/base";
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +15,7 @@
     <!-- Tell Decap exactly where config.yml lives. Without this, Decap resolves
          `config.yml` relative to the current URL, which 404s when the admin page
          is served at /admin (no trailing slash). -->
-    <link rel="cms-config-url" type="text/yaml" href="/admin/config.yml" />
+    <link rel="cms-config-url" type="text/yaml" href={withBase("/admin/config.yml")} />
   </head>
   <body>
     <!-- Include the script that powers Decap CMS. Served from the CDN so no

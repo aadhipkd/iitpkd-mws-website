@@ -1,4 +1,6 @@
 ---
+import { withBase } from "../lib/base";
+
 interface Props {
   block: {
     type: string;
@@ -37,7 +39,7 @@ const initials = (block.title ?? "?")
   block.type === "paragraph" && (
     <p class="content-text">
       {block.text}
-      {block.links?.map((link) => <a href={link.href}> {link.label}</a>)}
+      {block.links?.map((link) => <a href={withBase(link.href)}> {link.label}</a>)}
     </p>
   )
 }
@@ -60,7 +62,7 @@ const initials = (block.title ?? "?")
   block.type === "profile" && (
     <div class={`profile-card align-${block.align ?? "left"}`}>
       {block.image ? (
-        <img src={block.image} alt={block.title ?? "Team member"} loading="lazy" class="profile-photo" />
+        <img src={withBase(block.image)} alt={block.title ?? "Team member"} loading="lazy" class="profile-photo" />
       ) : (
         <div class="profile-initials" aria-hidden="true">
           <span>{initials || "?"}</span>
@@ -99,7 +101,7 @@ const initials = (block.title ?? "?")
     <div class="contact-detail-row">
       <span class="contact-detail-label">{block.label}</span>
       {block.links?.[0] ? (
-        <a href={block.links[0].href} class="contact-detail-value">
+        <a href={withBase(block.links[0].href)} class="contact-detail-value">
           {block.value}
         </a>
       ) : (

@@ -1,5 +1,6 @@
 ---
 import ServiceCard from "./ServiceCard.astro";
+import { withBase } from "../lib/base";
 
 interface Props {
   data?: {
@@ -35,7 +36,7 @@ const services = data?.items ?? [];
             number={service.number}
             title={service.title}
             description={service.description}
-            href={service.href}
+            href={withBase(service.href)}
           />
         </div>
       ))}

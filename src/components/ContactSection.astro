@@ -22,6 +22,8 @@ interface Props {
   };
 }
 
+import { withBase } from "../lib/base";
+
 const { data } = Astro.props;
 
 const label = data?.label ?? "Get in Touch";
@@ -44,7 +46,7 @@ const portal = data?.portal;
             <div class="contact-item">
               <span class="contact-item-label">{item.label}</span>
               {item.href ? (
-                <a href={item.href} class="contact-item-value">{item.value}</a>
+                <a href={withBase(item.href)} class="contact-item-value">{item.value}</a>
               ) : (
                 <span class="contact-item-value">{item.value}</span>
               )}

@@ -6,6 +6,8 @@ interface Props {
   };
 }
 
+import { withBase } from "../lib/base";
+
 const { data } = Astro.props;
 const items = data?.items ?? [];
 const ariaLabel = data?.label ?? "Quick access services";
@@ -15,7 +17,7 @@ const ariaLabel = data?.label ?? "Quick access services";
   <div class="container">
     <div class="quick-links-grid">
       {items.map((item) => (
-        <a href={item.href} class="quick-link-card">
+        <a href={withBase(item.href)} class="quick-link-card">
           <div class="quick-link-icon" aria-hidden="true">
             {item.icon === "monitor" && (
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">

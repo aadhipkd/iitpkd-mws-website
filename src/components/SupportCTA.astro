@@ -8,6 +8,8 @@ interface Props {
   };
 }
 
+import { withBase } from "../lib/base";
+
 const { data } = Astro.props;
 
 const title = data?.title ?? "Need Media or Website Support?";
@@ -21,7 +23,7 @@ const buttonHref = data?.buttonHref ?? "/contact";
     <div class="cta-content">
       <h2 id="cta-heading" class="cta-title">{title}</h2>
       <p class="cta-text">{text}</p>
-      <a href={buttonHref} class="btn btn--primary">{buttonLabel}</a>
+      <a href={withBase(buttonHref)} class="btn btn--primary">{buttonLabel}</a>
     </div>
   </div>
 </section>

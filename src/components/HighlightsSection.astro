@@ -1,5 +1,6 @@
 ---
 import type { HighlightItem } from "../lib/highlights";
+import { withBase } from "../lib/base";
 
 interface Props {
   data?: {
@@ -33,14 +34,14 @@ const isExternal = (url: string) => !url.startsWith("/");
     <div class="highlights-grid">
       {highlights.map((item, i) => (
         <a
-          href={item.url}
+          href={withBase(item.url)}
           class="highlight-card reveal"
           style={`--reveal-delay: ${Math.min(i, 5) * 70}ms`}
           target={isExternal(item.url) ? "_blank" : undefined}
           rel={isExternal(item.url) ? "noopener noreferrer" : undefined}
         >
           {item.image ? (
-            <img src={item.image} alt={item.title} class="highlight-image" loading="lazy" />
+            <img src={withBase(item.image)} alt={item.title} class="highlight-image" loading="lazy" />
           ) : (
             <div class="highlight-placeholder" aria-hidden="true">
               <span class="placeholder-text">[ Image ]</span>
