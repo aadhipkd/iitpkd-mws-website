@@ -41,6 +41,9 @@ jobs:
           NEWS_SHEET_CSV_URL: ${{ secrets.NEWS_SHEET_CSV_URL }}
           HIGHLIGHTS_SHEET_CSV_URL: ${{ secrets.HIGHLIGHTS_SHEET_CSV_URL }}
         run: npm run refresh-news
+        # Never block the deploy on the refresh step: committed snapshots are
+        # the fallback, and the build step also tolerates missing secrets.
+        continue-on-error: true
 
       - name: Build
         env:
