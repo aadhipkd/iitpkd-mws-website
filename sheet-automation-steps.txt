@@ -1,0 +1,96 @@
+==== SHEET AUTOMATION: auto-rebuild the site when a sheet row changes ====
+
+How it works:
+You edit a news/highlights sheet -> a small script in the sheet sends a
+"rebuild" signal to GitHub -> GitHub rebuilds + republishes the site.
+Site is updated ~1-2 minutes after your sheet edit.
+
+One-time setup per sheet (do BOTH sheets: news + highlights).
+
+------------------------------------------------------------
+STEP 1: Create a token (one time, total)
+------------------------------------------------------------
+1. Open:  https://github.com/settings/personal-access-tokens/new
+2. Token name:  sheet-rebuild-trigger
+3. Expiration: 90 days (or longer; renew later)
+4. "Resource owner": aadhipkd
+5. "Repository access": Only select repositories -> choose
+   iitpkd-mws-website
+6. Under "Permissions -> Repository permissions" set:
+   Actions:  Read and write
+   (everything else stays No access)
+7. Click "Generate token" -> COPY the token now (starts with
+   github_pat_...). You cannot see it again after closing.
+
+------------------------------------------------------------
+STEP 2: Add the script to the NEWS sheet
+------------------------------------------------------------
+1. Open the news Google Sheet
+2. Menu: Extensions -> Apps Script
+3. Delete anything in the editor and paste the script below.
+4. REPLACE the two ALL-CAPS values where marked.
+5. Save (disk icon), name it "Site rebuild trigger".
+6. Run setupTrigger once:
+   - In the toolbar dropdown pick "setupTrigger" -> click "Run"
+   - It asks for authorization -> Review -> Advanced -> Allow
+     (warning is normal: it is YOUR script calling YOUR repo)
+7. Repeat this entire STEP 2 on the HIGHLIGHTS sheet
+   (paste the same script again there).
+
+SCRIPT (copy everything between the lines):
+
+------------------------------------------------------------
+const GITHUB_TOKEN = 'PASTE_YOUR_TOKEN_HERE';
+const REPO = 'aadhipkd/iitpkd-mws-website';
+
+function onEditHandler(e) {
+  // Debounce: rapid edits only send one rebuild signal.
+  const props = PropertiesService.getScriptProperties();
+  const now = Date.now();
+  const last = Number(props.getProperty('lastDispatch') || 0);
+  if (now - last < 60 * 1000) return; // ignore edits within 60s of last
+  props.setProperty('lastDispatch', String(now));
+  UrlFetchApp.fetch('https://api.github.com/repos/' + REPO + '/dispatches', {
+    method: 'post',
+    contentType: 'application/json',
+    headers: {
+      Accept: 'application/vnd.github+json',
+      Authorization: 'Bearer ' + GITHUB_TOKEN,
+    },
+    payload: JSON.stringify({ event_type: 'sheet-update' }),
+    muteHttpExceptions: true,
+  });
+}
+
+function setupTrigger() {
+  ScriptApp.getProjectTriggers().forEach(function (t) {
+    if (t.getHandlerFunction() === 'onEditHandler') {
+      ScriptApp.deleteTrigger(t);
+    }
+  });
+  ScriptApp.newTrigger('onEditHandler').forSpreadsheetActiveSheet()
+    .onEdit().create();
+}
+------------------------------------------------------------
+
+IMPORTANT: In each sheet, when you first open Apps Script, the editor
+belongs to that sheet's container - so step "forSpreadsheetActiveSheet"
+binds the edit trigger to THAT sheet. That is why the script must be
+added separately to both sheets.
+
+------------------------------------------------------------
+STEP 3: Test
+------------------------------------------------------------
+1. Add or edit a row in the news sheet (wait 60s if you just edited).
+2. Open:  https://github.com/aadhipkd/iitpkd-mws-website/actions
+   -> a new "Build and Deploy to GitHub Pages" run should appear
+   (triggered by "repository_dispatch").
+3. When it goes green (~2 min), refresh the website - the row is there.
+
+------------------------------------------------------------
+SAFETY NET
+------------------------------------------------------------
+The site also rebuilds automatically every night at 03:00 IST
+(workflow schedule), so even without the script the content catches
+up at least daily. The CMS at /admin also triggers rebuilds on every
+publish.
