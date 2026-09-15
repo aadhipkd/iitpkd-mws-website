@@ -1,0 +1,23 @@
+==== STEP 1: Make the gh tool available ====
+export PATH=/tmp/opencode/bin:$PATH
+
+==== STEP 2: Log in to GitHub ====
+gh auth login
+
+  When prompted, choose:
+  - GitHub.com
+  - HTTPS
+  - Yes (authenticate Git with your GitHub credentials)
+  - Login with a web browser
+
+  A one-time code appears (e.g. XXXX-XXXX).
+  Copy it, press Enter, the browser opens.
+  Paste the code and click "Authorize github".
+
+==== STEP 3: Verify ====
+gh auth status
+
+  Expected output: Logged in to github.com as aadhipkd
+
+==== STEP 4: Finish ====
+Reply "proceed" in the chat so I can create the repo and publish the site.
