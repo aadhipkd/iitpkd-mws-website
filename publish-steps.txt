@@ -48,3 +48,15 @@ https://aadhipkd.github.io/iitpkd-mws-website/admin
 AFTER THIS: reply "proceed" in the chat for the last piece
 (sheet-edit automation: Apps Script + token).
 ------------------------------------------------------------
+
+==== YOUR WEBSITE LINK ====
+
+Website:
+https://aadhipkd.github.io/iitpkd-mws-website/
+
+CMS (admin):
+https://aadhipkd.github.io/iitpkd-mws-website/admin
+
+GitHub repo:
+https://github.com/aadhipkd/iitpkd-mws-website
+
