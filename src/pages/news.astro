@@ -1,0 +1,155 @@
+---
+import { getEntry } from "astro:content";
+import MainLayout from "../layouts/MainLayout.astro";
+import Header from "../components/Header.astro";
+import PageHeader from "../components/PageHeader.astro";
+import Footer from "../components/Footer.astro";
+import { getNews } from "../lib/news";
+
+const newsItems = await getNews();
+const page = await getEntry("pages", "news");
+const data = page?.data;
+---
+
+<MainLayout title={data?.pageTitle}>
+  <Header />
+  <main>
+    <PageHeader
+      title={data?.headerTitle}
+      subtitle={data?.headerSubtitle}
+    />
+
+    <section class="section" aria-labelledby="news-list">
+      <div class="container">
+        <h2 id="news-list" class="sr-only">News items</h2>
+
+        {newsItems.length === 0 ? (
+          <p class="news-empty">News updates will appear here soon.</p>
+        ) : (
+          <div class="news-list">
+            {newsItems.map((item) => (
+              <a
+                class="news-item"
+                href={item.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {item.image && (
+                  <img
+                    class="news-item-image"
+                    src={item.image}
+                    alt=""
+                    loading="lazy"
+                  />
+                )}
+                <div class="news-item-meta">
+                  <time class="news-item-date">{item.date}</time>
+                </div>
+                <h3 class="news-item-title">{item.title}</h3>
+                <span class="news-item-link">
+                  Read at the main website <span aria-hidden="true">&rarr;</span>
+                </span>
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  </main>
+  <Footer />
+</MainLayout>
+
+<style>
+  .news-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  .news-item {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-6);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast),
+      transform var(--transition-fast);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .news-item:hover {
+      border-color: var(--color-accent);
+      box-shadow: var(--shadow-sm);
+      transform: translateY(-2px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .news-item:hover {
+      border-color: var(--color-accent);
+    }
+  }
+
+  .news-item-image {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--space-4);
+  }
+
+  .news-item-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-3);
+  }
+
+  .news-item-date {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    font-weight: var(--weight-medium);
+  }
+
+  .news-item-title {
+    font-size: var(--text-lg);
+    font-weight: var(--weight-semibold);
+    color: var(--color-primary);
+    margin-bottom: var(--space-4);
+    line-height: var(--leading-tight);
+  }
+
+  .news-item-link {
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    color: var(--color-accent);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-top: auto;
+    transition: gap var(--transition-fast), color var(--transition-fast);
+  }
+
+  .news-item:hover .news-item-link {
+    color: var(--color-primary);
+    gap: var(--space-3);
+  }
+
+  .news-empty {
+    font-size: var(--text-base);
+    color: var(--color-text-muted);
+    padding: var(--space-8);
+    text-align: center;
+    border: 1px dashed var(--color-border-light);
+    border-radius: var(--radius-md);
+  }
+
+  @media (min-width: 769px) {
+    .news-list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

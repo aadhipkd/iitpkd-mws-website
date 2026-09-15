@@ -1,0 +1,67 @@
+pageTitle: Website Support | Media & Website Section, IIT Palakkad
+headerTitle: Website Support
+headerSubtitle: >-
+  Design, development, maintenance and technical support for IIT Palakkad
+  websites.
+blocks:
+  - type: heading
+    section: one
+    title: Overview
+  - type: paragraph
+    section: one
+    text: >-
+      The Media & Website Section provides website-related support to
+      departments, schools, centres and other Institute units. This includes
+      the design, development and ongoing maintenance of websites that serve as
+      the digital face of the Institute.
+  - type: subheading
+    section: one
+    title: What We Provide
+  - type: list
+    section: one
+    items:
+      - Design and development of new Institute and departmental websites
+      - Content management system (CMS) setup and support
+      - Website hosting and domain management
+      - Technical maintenance and security updates
+      - Accessibility compliance and responsive design
+      - Content guidance and editorial support
+  - type: sidebar
+    section: one
+    title: Quick Links
+    links:
+      - label: Website Resources
+        href: /resources
+      - label: Request Support
+        href: /contact
+      - label: All Services
+        href: /services
+  - type: heading
+    section: alt
+    title: How to Request Website Support
+  - type: paragraph
+    section: alt
+    text: >-
+      To request website-related support, please reach out through the contact
+      page with the following details:
+  - type: step
+    section: alt
+    number: "1"
+    title: Describe Your Requirement
+    text: >-
+      Provide a brief description of the website support needed, including the
+      department or unit and the nature of the request.
+  - type: step
+    section: alt
+    number: "2"
+    title: Submit Your Request
+    text: >-
+      Send your request through the contact page. Our team will review and
+      acknowledge your request.
+  - type: step
+    section: alt
+    number: "3"
+    title: Follow Up
+    text: >-
+      The section will follow up with you to discuss requirements, timelines
+      and any additional details.

@@ -1,0 +1,41 @@
+title: Resources
+note: >-
+  Actual resource files and documents will be added as they become available.
+  Placeholder links marked with # will be replaced with real URLs.
+categories:
+  - title: Website Resources
+    description: Templates, guidelines and tools for managing Institute websites.
+    items:
+      - label: Website Content Guidelines
+        href: "#"
+      - label: CMS Documentation
+        href: "#"
+      - label: Web Standards & Accessibility
+        href: "#"
+  - title: Media Resources
+    description: Photography and videography resources for Institute events.
+    items:
+      - label: Photography Guidelines
+        href: "#"
+      - label: Image Naming Conventions
+        href: "#"
+      - label: Logo & Brand Assets
+        href: "#"
+  - title: AV Resources
+    description: Audio-visual equipment information and usage guides.
+    items:
+      - label: AV Equipment List
+        href: "#"
+      - label: Setup Guidelines
+        href: "#"
+      - label: Troubleshooting Guide
+        href: "#"
+  - title: Guidelines
+    description: General communication and digital content guidelines.
+    items:
+      - label: Communication Guidelines
+        href: "#"
+      - label: Social Media Policy
+        href: "#"
+      - label: Digital Content Standards
+        href: "#"

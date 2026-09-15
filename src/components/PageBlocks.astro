@@ -1,0 +1,318 @@
+---
+import BlockView from "./BlockView.astro";
+
+interface Block {
+  type: string;
+  title?: string;
+  text?: string;
+  number?: string;
+  section?: string;
+  icon?: string;
+  image?: string;
+  items?: string[];
+  links?: Array<{ label: string; href: string }>;
+  label?: string;
+  value?: string;
+}
+
+interface Props {
+  blocks?: Block[];
+}
+
+const { blocks = [] } = Astro.props;
+
+// Group blocks into sections by their `section` value, preserving order.
+const sections: Block[][] = [];
+for (const block of blocks) {
+  const last = sections[sections.length - 1];
+  if (last && last[0].section === block.section) {
+    last.push(block);
+  } else {
+    sections.push([block]);
+  }
+}
+
+const sectionClass = (name?: string) =>
+  name === "alt" ? "section section--alt" : "section";
+---
+
+{sections.map((section) => {
+  const sidebarBlocks = section.filter((b) => b.type === "sidebar");
+  const mainBlocks = section.filter((b) => b.type !== "sidebar");
+  const hasSidebar = sidebarBlocks.length > 0;
+  const ctaButton = section.find((b) => b.type === "button");
+  const serviceRows = section.filter((b) => b.type === "service");
+  const allProfiles = section.every((b) => b.type === "profile");
+  const bandClass = allProfiles
+    ? `${sectionClass(section[0].section)} section--compact`
+    : sectionClass(section[0].section);
+  const flowBlocks = mainBlocks.filter(
+    (b) => b.type !== "service" && b.type !== "button"
+  );
+  // Preserve file order: consecutive profiles share one grid, other blocks render inline.
+  const flow: Array<Block | Block[]> = [];
+  for (const b of flowBlocks) {
+    if (b.type === "profile") {
+      const last = flow[flow.length - 1];
+      if (Array.isArray(last)) {
+        last.push(b);
+      } else {
+        flow.push([b]);
+      }
+    } else {
+      flow.push(b);
+    }
+  }
+  const regularBlocks = mainBlocks.filter(
+    (b) => b.type !== "service" && b.type !== "button" && b.type !== "profile"
+  );
+
+  return (
+    <section class={bandClass}>
+      <div class="container">
+        {hasSidebar ? (
+          <div class="content-grid">
+            <div class="content-main">
+              {regularBlocks.map((block) => <BlockView block={block} />)}
+            </div>
+            <aside class="content-sidebar">
+              {sidebarBlocks.map((block, i) => (
+                <div
+                  class="sidebar-card"
+                  style={i > 0 ? "margin-top: var(--space-4);" : undefined}
+                >
+                  <h3 class="sidebar-card-title">{block.title}</h3>
+                  {block.links && block.links.length > 0 ? (
+                    <ul class="sidebar-links">
+                      {block.links.map((link) => (
+                        <li><a href={link.href}>{link.label}</a></li>
+                      ))}
+                    </ul>
+                  ) : block.text ? (
+                    <p class="sidebar-note">{block.text}</p>
+                  ) : null}
+                </div>
+              ))}
+            </aside>
+          </div>
+        ) : serviceRows.length > 0 ? (
+          <>
+            {flow.map((node) =>
+              Array.isArray(node) ? (
+                <div class="profile-grid">
+                  {node.map((block) => <BlockView block={block} />)}
+                </div>
+              ) : (
+                <BlockView block={node} />
+              )
+            )}
+            <div class="services-list">
+              {serviceRows.map((row) => (
+                <a href={row.links?.[0]?.href ?? "#"} class="service-row">
+                  <div class="service-row-icon" aria-hidden="true">
+                    {row.icon === "monitor" && (
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                        <line x1="8" y1="21" x2="16" y2="21" />
+                        <line x1="12" y1="17" x2="12" y2="21" />
+                      </svg>
+                    )}
+                    {row.icon === "camera" && (
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                        <circle cx="12" cy="13" r="4" />
+                      </svg>
+                    )}
+                    {row.icon === "speaker" && (
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                        <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                      </svg>
+                    )}
+                    {row.icon === "megaphone" && (
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 11l18-5v12L3 13v-2z" />
+                        <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" />
+                      </svg>
+                    )}
+                  </div>
+                  <div class="service-row-content">
+                    <h3 class="service-row-title">{row.title}</h3>
+                    <p class="service-row-desc">{row.text}</p>
+                  </div>
+                  <span class="service-row-arrow" aria-hidden="true">&rarr;</span>
+                </a>
+              ))}
+            </div>
+          </>
+        ) : (
+          <>
+            {flow.map((node) =>
+              Array.isArray(node) ? (
+                <div class="profile-grid">
+                  {node.map((block) => <BlockView block={block} />)}
+                </div>
+              ) : (
+                <BlockView block={node} />
+              )
+            )}
+            {ctaButton && (
+              <div class="cta-wrap">
+                <a
+                  href={ctaButton.links?.[0]?.href ?? "/contact"}
+                  class="btn btn--accent"
+                >
+                  {ctaButton.label ?? ctaButton.title}
+                </a>
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    </section>
+  );
+})}
+
+<style>
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-12);
+  }
+
+  .profile-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: var(--space-6);
+    margin-top: var(--space-2);
+    margin-bottom: var(--space-8);
+  }
+
+  .section--compact {
+    padding-block: 0;
+  }
+
+  .sidebar-card {
+    padding: var(--space-6);
+    background-color: var(--color-bg-light);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+  }
+
+  .sidebar-card-title {
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    color: var(--color-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: var(--space-4);
+  }
+
+  .sidebar-links {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .sidebar-links a {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .sidebar-links a:hover {
+    color: var(--color-accent);
+  }
+
+  .sidebar-note {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    line-height: var(--leading-relaxed);
+    margin-bottom: 0;
+  }
+
+  .cta-wrap {
+    text-align: center;
+    padding: var(--space-4) 0;
+  }
+
+  /* Service rows */
+  .services-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+  }
+
+  .service-row {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-5);
+    padding: var(--space-6);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    color: var(--color-text);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .service-row:hover {
+    border-color: var(--color-accent);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .service-row-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-md);
+    background-color: var(--color-bg-light);
+    color: var(--color-accent);
+    flex-shrink: 0;
+  }
+
+  .service-row-content {
+    flex: 1;
+  }
+
+  .service-row-title {
+    font-size: var(--text-lg);
+    font-weight: var(--weight-semibold);
+    color: var(--color-primary);
+    margin-bottom: var(--space-1);
+  }
+
+  .service-row-desc {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    line-height: var(--leading-relaxed);
+  }
+
+  .service-row-arrow {
+    font-size: var(--text-lg);
+    color: var(--color-border);
+    flex-shrink: 0;
+    margin-top: var(--space-1);
+    transition: color var(--transition-fast), transform var(--transition-fast);
+  }
+
+  .service-row:hover .service-row-arrow {
+    color: var(--color-accent);
+    transform: translateX(2px);
+  }
+
+  @media (min-width: 769px) {
+    .content-grid {
+      grid-template-columns: 1fr 280px;
+    }
+
+    .service-row {
+      padding: var(--space-8);
+    }
+  }
+</style>

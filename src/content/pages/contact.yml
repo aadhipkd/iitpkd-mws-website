@@ -1,0 +1,36 @@
+pageTitle: Contact | Media & Website Section, IIT Palakkad
+headerTitle: Contact Us
+headerSubtitle: For any media, website or audiovisual requirements, please reach out to us.
+blocks:
+  - type: heading
+    section: one
+    title: Get in Touch
+  - type: paragraph
+    section: one
+    text: For any media, website or audiovisual requirements, please reach out to us.
+  - type: contact
+    section: one
+    label: Section
+    value: Media & Website Section
+  - type: contact
+    section: one
+    label: Institute
+    value: Indian Institute of Technology Palakkad
+  - type: contact
+    section: one
+    label: Email
+    value: media@iitpkd.ac.in
+    links:
+      - label: media@iitpkd.ac.in
+        href: mailto:media@iitpkd.ac.in
+  - type: paragraph
+    section: one
+    text: >-
+      Please include a clear description of your requirement when writing to
+      us. This helps us respond more effectively.
+  - type: button
+    section: one
+    label: Request Service via Support Portal
+    links:
+      - label: Open support portal
+        href: "#"

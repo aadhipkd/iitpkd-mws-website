@@ -1,0 +1,34 @@
+pageTitle: People | Media & Website Section, IIT Palakkad
+headerTitle: Our Team
+headerSubtitle: The people behind the Media & Website Section of IIT Palakkad.
+blocks:
+  - type: profile
+    section: chairman
+    title: Chairman Name
+    text: Chairman, Media & Website Section
+    align: center
+  - align: center
+    type: profile
+    section: faculty
+  - type: profile
+    section: faculty
+    title: Faculty Name
+    text: Faculty In-charge
+    align: center
+  - type: profile
+    section: faculty
+    title: Faculty Name
+    text: Faculty In-charge
+    align: center
+  - type: profile
+    section: staff
+    title: Staff Name
+    text: Support Staff
+  - type: profile
+    section: staff
+    title: Staff Name
+    text: Support Staff
+  - type: profile
+    section: staff
+    title: Staff Name
+    text: Support Staff

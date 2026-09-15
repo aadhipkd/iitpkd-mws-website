@@ -1,0 +1,158 @@
+---
+import type { NewsItem } from "../lib/news";
+
+interface Props {
+  data?: {
+    label: string;
+    title: string;
+    viewAll: string;
+    viewAllHref: string;
+  };
+  items?: NewsItem[];
+}
+
+const { data, items = [] } = Astro.props;
+
+const label = data?.label ?? "Latest Updates";
+const title = data?.title ?? "Happenings";
+const viewAll = data?.viewAll ?? "View All →";
+const viewAllHref = data?.viewAllHref ?? "/news";
+
+const newsItems = items.slice(0, 3);
+---
+
+{newsItems.length > 0 && (
+<section id="news" class="section section--alt" aria-labelledby="news-heading">
+  <div class="container">
+    <div class="news-header reveal">
+      <div>
+        <span class="section-label">{label}</span>
+        <h2 id="news-heading" class="section-title">{title}</h2>
+      </div>
+      <a href={viewAllHref} class="btn btn--ghost">{viewAll}</a>
+    </div>
+
+    <div class="news-grid">
+      {newsItems.map((item, i) => (
+        <a
+          class="news-card reveal"
+          style={`--reveal-delay: ${Math.min(i, 5) * 70}ms`}
+          href={item.url}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {item.image && (
+            <img class="news-image" src={item.image} alt="" loading="lazy" />
+          )}
+          <div class="news-meta">
+            <time class="news-date">{item.date}</time>
+          </div>
+          <h3 class="news-title">{item.title}</h3>
+          <span class="news-link">
+            Read at the main website <span aria-hidden="true">&rarr;</span>
+          </span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+)}
+
+<style>
+  .news-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .news-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    margin-top: var(--space-10);
+  }
+
+  .news-card {
+    padding: var(--space-6);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast),
+      transform var(--transition-fast);
+  }
+
+  .news-image {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--space-4);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .news-card:hover {
+      border-color: var(--color-accent);
+      box-shadow: var(--shadow-sm);
+      transform: translateY(-2px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .news-card:hover {
+      border-color: var(--color-accent);
+    }
+  }
+
+  .news-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-3);
+  }
+
+  .news-date {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    font-weight: var(--weight-medium);
+  }
+
+  .news-title {
+    font-size: var(--text-lg);
+    font-weight: var(--weight-semibold);
+    color: var(--color-primary);
+    margin-bottom: var(--space-4);
+    line-height: var(--leading-tight);
+  }
+
+  .news-link {
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    color: var(--color-accent);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-top: auto;
+    transition: gap var(--transition-fast), color var(--transition-fast);
+  }
+
+  .news-link:hover {
+    color: var(--color-primary);
+    gap: var(--space-3);
+  }
+
+  @media (min-width: 769px) {
+    .news-header {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .news-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

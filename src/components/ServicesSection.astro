@@ -1,0 +1,71 @@
+---
+import ServiceCard from "./ServiceCard.astro";
+
+interface Props {
+  data?: {
+    label: string;
+    title: string;
+    subtitle: string;
+    items: Array<{ number: string; title: string; description: string; href: string }>;
+  };
+}
+
+const { data } = Astro.props;
+
+const label = data?.label ?? "What We Do";
+const title = data?.title ?? "Our Services";
+const subtitle = data?.subtitle ?? "";
+const services = data?.items ?? [];
+---
+
+<section id="services" class="section section--alt" aria-labelledby="services-heading">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-label">{label}</span>
+      <h2 id="services-heading" class="section-title">{title}</h2>
+      <p class="section-subtitle">
+        {subtitle}
+      </p>
+    </div>
+
+    <div class="services-grid">
+      {services.map((service, i) => (
+        <div class="reveal" style={`--reveal-delay: ${Math.min(i, 5) * 70}ms`}>
+          <ServiceCard
+            number={service.number}
+            title={service.title}
+            description={service.description}
+            href={service.href}
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    margin-top: var(--space-10);
+    align-items: stretch;
+  }
+
+  .services-grid > .reveal {
+    display: flex;
+    min-height: 100%;
+  }
+
+  @media (min-width: 520px) {
+    .services-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 900px) {
+    .services-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

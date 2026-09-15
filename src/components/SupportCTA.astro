@@ -1,0 +1,61 @@
+---
+interface Props {
+  data?: {
+    title: string;
+    text: string;
+    buttonLabel: string;
+    buttonHref: string;
+  };
+}
+
+const { data } = Astro.props;
+
+const title = data?.title ?? "Need Media or Website Support?";
+const text = data?.text ?? "Submit a request for website, audiovisual or media-related assistance.";
+const buttonLabel = data?.buttonLabel ?? "Submit a Request";
+const buttonHref = data?.buttonHref ?? "/contact";
+---
+
+<section class="support-cta" aria-labelledby="cta-heading">
+  <div class="container">
+    <div class="cta-content">
+      <h2 id="cta-heading" class="cta-title">{title}</h2>
+      <p class="cta-text">{text}</p>
+      <a href={buttonHref} class="btn btn--primary">{buttonLabel}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .support-cta {
+    background-color: var(--color-primary);
+    padding: var(--space-16) 0;
+  }
+
+  .cta-content {
+    text-align: center;
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cta-title {
+    font-size: clamp(var(--text-2xl), 1.3rem + 1vw, var(--text-3xl));
+    font-weight: var(--weight-bold);
+    color: var(--color-text-inverse);
+    margin-bottom: var(--space-4);
+  }
+
+  .cta-text {
+    font-size: var(--text-lg);
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: var(--space-8);
+    line-height: var(--leading-relaxed);
+  }
+
+  @media (max-width: 768px) {
+    .support-cta {
+      padding: var(--space-12) 0;
+    }
+  }
+</style>

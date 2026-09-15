@@ -1,0 +1,145 @@
+---
+interface ContactDetail {
+  label: string;
+  value: string;
+  href?: string;
+}
+
+interface Portal {
+  title: string;
+  text: string;
+  buttonLabel: string;
+  buttonHref: string;
+}
+
+interface Props {
+  data?: {
+    label: string;
+    title: string;
+    text: string;
+    details: ContactDetail[];
+    portal?: Portal;
+  };
+}
+
+const { data } = Astro.props;
+
+const label = data?.label ?? "Get in Touch";
+const title = data?.title ?? "Contact Us";
+const text = data?.text ?? "";
+const details = data?.details ?? [];
+const portal = data?.portal;
+---
+
+<section id="contact" class="section" aria-labelledby="contact-heading">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <span class="section-label">{label}</span>
+        <h2 id="contact-heading" class="section-title">{title}</h2>
+        <p class="contact-text">{text}</p>
+
+        <div class="contact-details">
+          {details.map((item) => (
+            <div class="contact-item">
+              <span class="contact-item-label">{item.label}</span>
+              {item.href ? (
+                <a href={item.href} class="contact-item-value">{item.value}</a>
+              ) : (
+                <span class="contact-item-value">{item.value}</span>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="portal-card">
+        <h3 class="portal-heading">{portal?.title ?? "Request a Service"}</h3>
+        <p class="portal-text">
+          {portal?.text ?? "For service requests, please use the institute support portal."}
+        </p>
+        <a
+          class="btn btn--accent"
+          href={portal?.buttonHref ?? "#"}
+          target="_blank"
+          rel="noopener"
+        >
+          {portal?.buttonLabel ?? "Open Support Portal"} <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-12);
+  }
+
+  .contact-text {
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+    line-height: var(--leading-relaxed);
+    margin-top: var(--space-4);
+    margin-bottom: var(--space-8);
+  }
+
+  .contact-details {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .contact-item-label {
+    display: block;
+    font-size: var(--text-xs);
+    font-weight: var(--weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-1);
+  }
+
+  .contact-item-value {
+    font-size: var(--text-base);
+    font-weight: var(--weight-medium);
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  a.contact-item-value:hover {
+    color: var(--color-accent);
+  }
+
+  .portal-card {
+    padding: var(--space-8);
+    background-color: var(--color-bg-light);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    align-self: start;
+  }
+
+  .portal-heading {
+    font-size: var(--text-xl);
+    font-weight: var(--weight-semibold);
+    color: var(--color-primary);
+  }
+
+  .portal-text {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    line-height: var(--leading-relaxed);
+  }
+
+  @media (min-width: 769px) {
+    .contact-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-16);
+    }
+  }
+</style>

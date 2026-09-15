@@ -1,0 +1,59 @@
+pageTitle: AV Support | Media & Website Section, IIT Palakkad
+headerTitle: Audio-Visual Support
+headerSubtitle: >-
+  Setup and management of audio-visual equipment for seminars, conferences,
+  meetings and Institute events.
+blocks:
+  - type: heading
+    section: one
+    title: Overview
+  - type: paragraph
+    section: one
+    text: >-
+      The Media & Website Section provides audio-visual support for Institute
+      events, seminars, conferences, meetings and other functions. The section
+      assists with the setup, operation and management of AV equipment to
+      ensure smooth conduct of events.
+  - type: subheading
+    section: one
+    title: AV Services
+  - type: list
+    section: one
+    items:
+      - Projector and screen setup for presentations
+      - Microphone and sound system arrangement
+      - Video conferencing and live streaming support
+      - Recording of seminars, lectures and events
+      - Equipment setup for hybrid and online events
+      - Technical troubleshooting during events
+  - type: subheading
+    section: one
+    title: Requesting AV Support
+  - type: paragraph
+    section: one
+    text: >-
+      To request audio-visual support for an event, please submit your request
+      through the contact page with details about the event, venue, expected
+      attendance and specific AV requirements.
+  - type: paragraph
+    section: one
+    text: >-
+      It is recommended to submit AV requests at least one week before the
+      scheduled event to allow sufficient time for preparation.
+  - type: sidebar
+    section: one
+    title: Quick Links
+    links:
+      - label: AV Resources
+        href: /resources
+      - label: Request AV Support
+        href: /contact
+      - label: All Services
+        href: /services
+  - type: sidebar
+    section: one
+    title: Note
+    text: >-
+      This page will eventually contain detailed information about the AV
+      support request process and available equipment. Please check back for
+      updates.

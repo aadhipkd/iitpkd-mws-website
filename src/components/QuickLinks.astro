@@ -1,0 +1,145 @@
+---
+interface Props {
+  data?: {
+    label?: string;
+    items: Array<{ title: string; href: string; icon: "monitor" | "camera" | "speaker" | "megaphone" }>;
+  };
+}
+
+const { data } = Astro.props;
+const items = data?.items ?? [];
+const ariaLabel = data?.label ?? "Quick access services";
+---
+
+<section class="quick-links" aria-label={ariaLabel}>
+  <div class="container">
+    <div class="quick-links-grid">
+      {items.map((item) => (
+        <a href={item.href} class="quick-link-card">
+          <div class="quick-link-icon" aria-hidden="true">
+            {item.icon === "monitor" && (
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                <line x1="8" y1="21" x2="16" y2="21" />
+                <line x1="12" y1="17" x2="12" y2="21" />
+              </svg>
+            )}
+            {item.icon === "camera" && (
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                <circle cx="12" cy="13" r="4" />
+              </svg>
+            )}
+            {item.icon === "speaker" && (
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+              </svg>
+            )}
+            {item.icon === "megaphone" && (
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 11l18-5v12L3 13v-2z" />
+                <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" />
+              </svg>
+            )}
+          </div>
+          <span class="quick-link-title">{item.title}</span>
+          <span class="quick-link-arrow" aria-hidden="true">&rarr;</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .quick-links {
+    background-color: var(--color-bg);
+    border-bottom: 1px solid var(--color-border-light);
+    padding: var(--space-8) 0;
+  }
+
+  .quick-links-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+
+  .quick-link-card {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    min-height: 44px;
+    padding: var(--space-5) var(--space-6);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    color: var(--color-text);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast),
+      color var(--transition-fast), transform var(--transition-fast);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .quick-link-card:hover {
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+      box-shadow: var(--shadow-sm);
+      transform: translateY(-2px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .quick-link-card:hover {
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+      box-shadow: var(--shadow-sm);
+    }
+  }
+
+  .quick-link-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    background-color: var(--color-bg-light);
+    color: var(--color-accent);
+    flex-shrink: 0;
+    transition: background-color var(--transition-fast);
+  }
+
+  .quick-link-card:hover .quick-link-icon {
+    background-color: var(--color-bg-alt);
+  }
+
+  .quick-link-title {
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    flex: 1;
+  }
+
+  .quick-link-arrow {
+    font-size: var(--text-lg);
+    color: var(--color-border);
+    transition: color var(--transition-fast), transform var(--transition-fast);
+  }
+
+  .quick-link-card:hover .quick-link-arrow {
+    color: var(--color-accent);
+    transform: translateX(2px);
+  }
+
+  @media (min-width: 520px) {
+    .quick-links-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 900px) {
+    .quick-links-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>

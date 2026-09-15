@@ -1,0 +1,65 @@
+name: Build and Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  # Sheet edits call this via the Apps Script (repository_dispatch).
+  repository_dispatch:
+    types: [sheet-update]
+  # Optional nightly rebuild so dated content never goes stale.
+  schedule:
+    - cron: "30 21 * * *" # 03:00 IST daily
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Refresh sheet snapshots (news + highlights)
+        env:
+          NEWS_SHEET_CSV_URL: ${{ secrets.NEWS_SHEET_CSV_URL }}
+          HIGHLIGHTS_SHEET_CSV_URL: ${{ secrets.HIGHLIGHTS_SHEET_CSV_URL }}
+        run: npm run refresh-news
+
+      - name: Build
+        env:
+          NEWS_SHEET_CSV_URL: ${{ secrets.NEWS_SHEET_CSV_URL }}
+          HIGHLIGHTS_SHEET_CSV_URL: ${{ secrets.HIGHLIGHTS_SHEET_CSV_URL }}
+        run: npm run build
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

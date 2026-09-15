@@ -1,0 +1,68 @@
+pageTitle: About | Media & Website Section, IIT Palakkad
+headerTitle: About the Section
+headerSubtitle: >-
+  Supporting the digital presence, media communication and audiovisual
+  requirements of IIT Palakkad.
+blocks:
+  - type: heading
+    section: one
+    title: Overview
+  - type: paragraph
+    section: one
+    text: >-
+      The Media & Website Section of the Indian Institute of Technology
+      Palakkad supports the Institute's digital presence, media communication
+      and audiovisual requirements. The section works with departments, schools,
+      centres, faculty, staff and other Institute units to support effective
+      communication and digital content.
+  - type: heading
+    section: alt
+    title: Areas of Support
+  - type: paragraph
+    section: alt
+    text: The section provides support across four key areas.
+  - type: card
+    section: alt
+    title: Institute Website Management
+    text: >-
+      Design, development and maintenance of the Institute website and
+      departmental websites. Content management, hosting support and technical
+      assistance for Institute units.
+  - type: card
+    section: alt
+    title: Digital Communication
+    text: >-
+      Support for digital newsletters, online announcements, social media
+      presence and other communication channels that connect the Institute with
+      its stakeholders.
+  - type: card
+    section: alt
+    title: Media & Photography
+    text: >-
+      Professional photography and videography for Institute events, campus
+      life, official communications and promotional content.
+  - type: card
+    section: alt
+    title: Audiovisual Requirements
+    text: >-
+      Setup and management of audio-visual equipment for seminars, conferences,
+      meetings and other Institute events.
+  - type: heading
+    section: two
+    title: Our Approach
+  - type: paragraph
+    section: two
+    text: >-
+      The section collaborates closely with Institute units to understand their
+      communication needs and provides appropriate digital, media and
+      audiovisual support. The focus is on maintaining a consistent and
+      professional digital presence for the Institute while ensuring that
+      events and activities receive proper media coverage.
+  - type: paragraph
+    section: two
+    text: For specific requests, please visit our
+    links:
+      - label: contact page
+        href: /contact
+      - label: or explore our services.
+        href: /services

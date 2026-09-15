@@ -1,0 +1,99 @@
+---
+interface Props {
+  data?: {
+    label: string;
+    title: string;
+    text: string;
+    ctaLabel: string;
+    ctaHref: string;
+    stats: Array<{ number: string; label: string }>;
+  };
+}
+
+const { data } = Astro.props;
+
+const label = data?.label ?? "About the Section";
+const title = data?.title ?? "Media & Website Section";
+const text = data?.text ?? "";
+const ctaLabel = data?.ctaLabel ?? "Learn More →";
+const ctaHref = data?.ctaHref ?? "/about";
+const stats = data?.stats ?? [];
+---
+
+<section id="about" class="section" aria-labelledby="about-heading">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-content">
+        <span class="section-label">{label}</span>
+        <h2 id="about-heading" class="section-title">{title}</h2>
+        <p class="about-text">{text}</p>
+        <a href={ctaHref} class="btn btn--ghost" style="margin-top: var(--space-6);">
+          {ctaLabel}
+        </a>
+      </div>
+
+      <div class="about-highlights" aria-label="Key highlights">
+        {stats.map((stat) => (
+          <div class="about-stat">
+            <span class="about-stat-number">{stat.number}</span>
+            <span class="about-stat-label">{stat.label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-12);
+    align-items: start;
+  }
+
+  .about-text {
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+    line-height: var(--leading-relaxed);
+    margin-top: var(--space-4);
+  }
+
+  .about-highlights {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  .about-stat {
+    padding: var(--space-6);
+    background-color: var(--color-bg-light);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+  }
+
+  .about-stat-number {
+    display: block;
+    font-size: var(--text-3xl);
+    font-weight: var(--weight-bold);
+    color: var(--color-accent);
+    margin-bottom: var(--space-1);
+  }
+
+  .about-stat-label {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    font-weight: var(--weight-medium);
+  }
+
+  @media (min-width: 769px) {
+    .about-grid {
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: var(--space-16);
+    }
+
+    .about-highlights {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

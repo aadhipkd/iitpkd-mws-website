@@ -1,0 +1,70 @@
+pageTitle: Services | Media & Website Section, IIT Palakkad
+headerTitle: Our Services
+headerSubtitle: Comprehensive media, website and digital communication support for the Institute.
+blocks:
+  - type: heading
+    section: one
+    title: How We Can Help
+  - type: paragraph
+    section: one
+    text: >-
+      The Media & Website Section provides a range of services to support the
+      Institute's communication and digital needs. Select a service below to
+      learn more.
+  - type: service
+    section: one
+    number: "01"
+    title: Website Management
+    text: >-
+      Design, development and maintenance of Institute websites. Content
+      management, hosting support and technical assistance for departments and
+      units.
+    icon: monitor
+    links:
+      - label: website
+        href: /website
+  - type: service
+    section: one
+    number: "02"
+    title: Media & Photography
+    text: >-
+      Professional photography and videography for Institute events, campus
+      life, official communications and promotional content.
+    icon: camera
+    links:
+      - label: media
+        href: /media
+  - type: service
+    section: one
+    number: "03"
+    title: Audio-Visual Support
+    text: >-
+      Setup and management of audio-visual equipment for seminars, conferences,
+      meetings and other Institute events.
+    icon: speaker
+    links:
+      - label: av
+        href: /av-support
+  - type: service
+    section: one
+    number: "04"
+    title: Digital Communication
+    text: >-
+      Support for digital newsletters, social media presence, online
+      announcements and other Institute communication channels.
+    icon: megaphone
+    links:
+      - label: services
+        href: /services
+  - type: heading
+    section: alt
+    title: Need Support?
+  - type: paragraph
+    section: alt
+    text: Submit a request for website, audiovisual or media-related assistance.
+  - type: button
+    section: alt
+    label: Submit a Request
+    links:
+      - label: contact
+        href: /contact

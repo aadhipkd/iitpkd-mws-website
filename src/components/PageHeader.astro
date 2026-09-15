@@ -1,0 +1,42 @@
+---
+interface Props {
+  title: string;
+  subtitle?: string;
+}
+
+const { title, subtitle } = Astro.props;
+---
+
+<section class="page-header" aria-labelledby="page-header-heading">
+  <div class="container">
+    <h1 id="page-header-heading" class="page-header-title">{title}</h1>
+    {subtitle && <p class="page-header-subtitle">{subtitle}</p>}
+  </div>
+</section>
+
+<style>
+  .page-header {
+    background-color: var(--color-primary);
+    padding: var(--space-12) 0 var(--space-10);
+  }
+
+  .page-header-title {
+    font-size: clamp(var(--text-2xl), 1.3rem + 1vw, var(--text-3xl));
+    font-weight: var(--weight-bold);
+    color: var(--color-text-inverse);
+    margin-bottom: var(--space-2);
+  }
+
+  .page-header-subtitle {
+    font-size: var(--text-lg);
+    color: rgba(255, 255, 255, 0.65);
+    max-width: 640px;
+    line-height: var(--leading-relaxed);
+  }
+
+  @media (max-width: 768px) {
+    .page-header {
+      padding: var(--space-8) 0 var(--space-6);
+    }
+  }
+</style>

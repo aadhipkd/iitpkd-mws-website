@@ -1,0 +1,26 @@
+{
+  "name": "tender-telescope",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "cms": "decap-server",
+    "cms:local": "concurrently \"astro dev\" \"decap-server\"",
+    "refresh-news": "node scripts/refresh-news.mjs"
+  },
+  "dependencies": {
+    "astro": "^7.2.4",
+    "decap-cms-app": "^3.16.0",
+    "papaparse": "^5.7.0"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.5",
+    "decap-server": "^3.11.0"
+  }
+}

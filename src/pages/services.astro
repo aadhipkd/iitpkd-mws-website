@@ -1,0 +1,20 @@
+---
+import { getEntry } from "astro:content";
+import MainLayout from "../layouts/MainLayout.astro";
+import Header from "../components/Header.astro";
+import PageHeader from "../components/PageHeader.astro";
+import PageBlocks from "../components/PageBlocks.astro";
+import Footer from "../components/Footer.astro";
+
+const page = await getEntry("pages", "services");
+const data = page?.data;
+---
+
+<MainLayout title={data?.pageTitle}>
+  <Header />
+  <main>
+    <PageHeader title={data?.headerTitle} subtitle={data?.headerSubtitle} />
+    <PageBlocks blocks={data?.blocks} />
+  </main>
+  <Footer />
+</MainLayout>

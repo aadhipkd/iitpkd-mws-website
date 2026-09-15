@@ -1,0 +1,70 @@
+pageTitle: Media Services | Media & Website Section, IIT Palakkad
+headerTitle: Media & Photography
+headerSubtitle: >-
+  Professional photography, videography and media production support for IIT
+  Palakkad.
+blocks:
+  - type: heading
+    section: one
+    title: Overview
+  - type: paragraph
+    section: one
+    text: >-
+      The Media & Website Section provides photography and videography services
+      to support the Institute's communication and promotional needs. The
+      section covers events, campus activities, official ceremonies and other
+      Institute functions.
+  - type: subheading
+    section: one
+    title: Services Offered
+  - type: list
+    section: one
+    items:
+      - Event photography for seminars, workshops, convocations and conferences
+      - Campus and infrastructure photography
+      - Video coverage of Institute events and activities
+      - Photo and video editing and post-production
+      - Official portrait and group photographs
+      - Media content for Institute publications and digital platforms
+  - type: subheading
+    section: one
+    title: Event Coverage
+  - type: paragraph
+    section: one
+    text: >-
+      For event coverage requests, please provide details about the event
+      including date, time, venue and expected coverage requirements. It is
+      recommended to submit requests well in advance to ensure availability.
+  - type: sidebar
+    section: one
+    title: Quick Links
+    links:
+      - label: Gallery
+        href: /gallery
+      - label: Media Resources
+        href: /resources
+      - label: Request Coverage
+        href: /contact
+  - type: heading
+    section: alt
+    title: Guidelines
+  - type: paragraph
+    section: alt
+    text: >-
+      To ensure effective media coverage, please note the following:
+  - type: guideline
+    section: alt
+    title: Advance Requests
+    text: Submit media coverage requests at least one week before the event, whenever possible.
+  - type: guideline
+    section: alt
+    title: Event Details
+    text: >-
+      Provide complete event details including schedule, venue, expected
+      attendance and specific coverage needs.
+  - type: guideline
+    section: alt
+    title: Usage Rights
+    text: >-
+      Media content produced by the section is intended for Institute use.
+      Please specify the intended usage when making a request.

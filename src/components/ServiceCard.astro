@@ -1,0 +1,102 @@
+---
+interface Props {
+  number: string;
+  title: string;
+  description: string;
+  href: string;
+}
+
+const { number, title, description, href } = Astro.props;
+---
+
+<article class="service-card">
+  <div class="service-card-header">
+    <span class="service-card-number" aria-hidden="true">{number}</span>
+    <h3 class="service-card-title">{title}</h3>
+  </div>
+  <p class="service-card-desc">{description}</p>
+  <a href={href} class="service-card-link">
+    Learn more <span aria-hidden="true">&rarr;</span>
+  </a>
+</article>
+
+<style>
+  .service-card {
+    padding: var(--space-8);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: 100%;
+    transition: box-shadow var(--transition-base), border-color var(--transition-base),
+      transform var(--transition-base);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .service-card:hover {
+      border-color: var(--color-accent);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .service-card:hover {
+      border-color: var(--color-accent);
+      box-shadow: var(--shadow-md);
+    }
+  }
+
+  .service-card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-4);
+    margin-bottom: var(--space-4);
+  }
+
+  .service-card-number {
+    font-size: var(--text-3xl);
+    font-weight: var(--weight-bold);
+    color: var(--color-bg-alt);
+    line-height: 1;
+    flex-shrink: 0;
+    transition: color var(--transition-base);
+  }
+
+  .service-card:hover .service-card-number {
+    color: var(--color-accent-light);
+  }
+
+  .service-card-title {
+    font-size: var(--text-xl);
+    font-weight: var(--weight-semibold);
+    color: var(--color-primary);
+    line-height: var(--leading-tight);
+  }
+
+  .service-card-desc {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    line-height: var(--leading-relaxed);
+    flex: 1;
+    margin-bottom: var(--space-6);
+  }
+
+  .service-card-link {
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    color: var(--color-accent);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    transition: gap var(--transition-fast), color var(--transition-fast);
+  }
+
+  .service-card-link:hover {
+    color: var(--color-primary);
+    gap: var(--space-3);
+  }
+</style>

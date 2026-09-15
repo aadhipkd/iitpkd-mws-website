@@ -1,0 +1,354 @@
+---
+interface Props {
+  block: {
+    type: string;
+    title?: string;
+    text?: string;
+    number?: string;
+    label?: string;
+    value?: string;
+    image?: string;
+    items?: string[];
+    links?: Array<{ label: string; href: string }>;
+  };
+}
+
+const { block } = Astro.props;
+
+const initials = (block.title ?? "?")
+  .split(/[\s—–-]+/)
+  .filter(Boolean)
+  .slice(0, 2)
+  .map((w) => w[0]?.toUpperCase() ?? "")
+  .join("");
+---
+
+{
+  block.type === "heading" && (
+    <h2 class="content-heading">{block.title}</h2>
+  )
+}
+{
+  block.type === "subheading" && (
+    <h3 class="content-subheading">{block.title}</h3>
+  )
+}
+{
+  block.type === "paragraph" && (
+    <p class="content-text">
+      {block.text}
+      {block.links?.map((link) => <a href={link.href}> {link.label}</a>)}
+    </p>
+  )
+}
+{
+  block.type === "list" && (
+    <ul class="content-list">
+      {block.items?.map((item) => <li>{item}</li>)}
+    </ul>
+  )
+}
+{
+  block.type === "card" && (
+    <div class="content-card">
+      <h3 class="content-card-title">{block.title}</h3>
+      <p class="content-card-text">{block.text}</p>
+    </div>
+  )
+}
+{
+  block.type === "profile" && (
+    <div class={`profile-card align-${block.align ?? "left"}`}>
+      {block.image ? (
+        <img src={block.image} alt={block.title ?? "Team member"} loading="lazy" class="profile-photo" />
+      ) : (
+        <div class="profile-initials" aria-hidden="true">
+          <span>{initials || "?"}</span>
+        </div>
+      )}
+      <h3 class="profile-name">{block.title}</h3>
+      {block.text && <p class="profile-role">{block.text}</p>}
+    </div>
+  )
+}
+{
+  block.type === "step" && (
+    <div class="process-steps">
+      <div class="process-step">
+        <span class="process-step-number">{block.number}</span>
+        <div>
+          <h4 class="process-step-title">{block.title}</h4>
+          <p class="process-step-text">{block.text}</p>
+        </div>
+      </div>
+    </div>
+  )
+}
+{
+  block.type === "guideline" && (
+    <div class="guidelines-grid">
+      <div class="guideline-card">
+        <h4 class="guideline-title">{block.title}</h4>
+        <p class="guideline-text">{block.text}</p>
+      </div>
+    </div>
+  )
+}
+{
+  block.type === "contact" && (
+    <div class="contact-detail-row">
+      <span class="contact-detail-label">{block.label}</span>
+      {block.links?.[0] ? (
+        <a href={block.links[0].href} class="contact-detail-value">
+          {block.value}
+        </a>
+      ) : (
+        <span class="contact-detail-value">{block.value}</span>
+      )}
+    </div>
+  )
+}
+
+<style>
+  .content-heading {
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-bold);
+    color: var(--color-primary);
+    margin-bottom: var(--space-4);
+  }
+
+  .content-subheading {
+    font-size: var(--text-lg);
+    font-weight: var(--weight-semibold);
+    color: var(--color-primary);
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-4);
+  }
+
+  .content-text {
+    font-size: var(--text-base);
+    color: var(--color-text-muted);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-4);
+    max-width: 720px;
+  }
+
+  .content-text a {
+    color: var(--color-accent);
+  }
+
+  .content-text a:hover {
+    color: var(--color-primary);
+  }
+
+  .content-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding-left: var(--space-6);
+    margin-bottom: var(--space-6);
+  }
+
+  .content-list li {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    line-height: var(--leading-relaxed);
+    position: relative;
+  }
+
+  .content-list li::before {
+    content: "";
+    position: absolute;
+    left: calc(var(--space-6) * -1);
+    top: 0.55em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--color-accent);
+  }
+
+  .content-card {
+    padding: var(--space-6);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+    border-left: 3px solid var(--color-accent);
+    margin-bottom: var(--space-6);
+  }
+
+  .content-card-title {
+    font-size: var(--text-lg);
+    font-weight: var(--weight-semibold);
+    color: var(--color-primary);
+    margin-bottom: var(--space-2);
+  }
+
+  .content-card-text {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    line-height: var(--leading-relaxed);
+  }
+
+  .process-steps {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    max-width: 720px;
+    margin-bottom: var(--space-6);
+  }
+
+  .process-step {
+    display: flex;
+    gap: var(--space-5);
+    align-items: flex-start;
+  }
+
+  .process-step-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--color-accent);
+    color: var(--color-text-inverse);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-bold);
+    flex-shrink: 0;
+  }
+
+  .process-step-title {
+    font-size: var(--text-base);
+    font-weight: var(--weight-semibold);
+    color: var(--color-primary);
+    margin-bottom: var(--space-1);
+  }
+
+  .process-step-text {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    line-height: var(--leading-relaxed);
+  }
+
+  .guidelines-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    max-width: 720px;
+    margin-bottom: var(--space-6);
+  }
+
+  .guideline-card {
+    padding: var(--space-6);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+  }
+
+  .guideline-title {
+    font-size: var(--text-base);
+    font-weight: var(--weight-semibold);
+    color: var(--color-primary);
+    margin-bottom: var(--space-2);
+  }
+
+  .guideline-text {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    line-height: var(--leading-relaxed);
+  }
+
+  .contact-detail-row {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-4);
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--color-border-light);
+  }
+
+  .contact-detail-label {
+    font-size: var(--text-xs);
+    font-weight: var(--weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-muted);
+    min-width: 120px;
+  }
+
+  .contact-detail-value {
+    font-size: var(--text-base);
+    font-weight: var(--weight-medium);
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  a.contact-detail-value:hover {
+    color: var(--color-accent);
+  }
+
+  .profile-card {
+    flex: 1 1 300px;
+    max-width: 340px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: var(--space-6);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+  }
+
+  .profile-card.align-center {
+    margin-inline: auto;
+  }
+
+  .profile-card.align-right {
+    margin-left: auto;
+  }
+
+  .profile-photo,
+  .profile-initials {
+    width: 100%;
+    max-width: 180px;
+    margin: 0 auto var(--space-4);
+    aspect-ratio: 1 / 1;
+    border-radius: var(--radius-lg);
+  }
+
+  .profile-photo {
+    object-fit: cover;
+    border: 1px solid var(--color-border-light);
+  }
+
+  .profile-initials {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-bg-alt);
+    border: 1px solid var(--color-border-light);
+    font-size: var(--text-3xl);
+    font-weight: var(--weight-bold);
+    color: var(--color-accent);
+  }
+
+  .profile-name {
+    font-size: var(--text-lg);
+    font-weight: var(--weight-semibold);
+    color: var(--color-primary);
+    line-height: var(--leading-tight);
+    margin-bottom: var(--space-1);
+  }
+
+  .profile-role {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    line-height: var(--leading-relaxed);
+  }
+
+  @media (min-width: 769px) {
+    .guidelines-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

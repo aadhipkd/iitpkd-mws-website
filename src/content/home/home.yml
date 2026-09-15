@@ -1,0 +1,102 @@
+title: Homepage
+hero:
+  label: Media & Website Section
+  title: |-
+    Media communication,
+    and audiovisual requirements of IIT Palakkad.
+  primaryCta:
+    label: Explore Services
+    href: /services
+  secondaryCta:
+    label: Contact Us
+    href: /contact
+quickLinks:
+  label: Quick access services
+  items:
+    - title: Website Support
+      href: /website
+      icon: monitor
+    - title: Media Services
+      href: /media
+      icon: camera
+    - title: AV Support
+      href: /av-support
+      icon: speaker
+    - title: Digital Communication
+      href: /services
+      icon: megaphone
+about:
+  label: About the Section
+  title: Media & Website Section
+  text: |-
+    The Media & Website Section supports the Institute's digital presence,
+    media communication and audiovisual requirements. The section works with
+    departments, schools, centres, faculty, staff and other Institute units to
+    support effective communication and digital content.
+  ctaLabel: Learn More →
+  ctaHref: /about
+  stats:
+    - number: 5+
+      label: Departments Supported
+    - number: 24/7
+      label: Digital Support
+services:
+  label: What We Do
+  title: Our Services
+  subtitle: Comprehensive media, website and digital communication support for the
+    Institute.
+  items:
+    - number: "01"
+      title: Website Management
+      description: Design, development and maintenance of Institute websites. Content
+        management, hosting support and technical assistance for departments and
+        units.
+      href: /website
+    - number: "02"
+      title: Media & Photography
+      description: Professional photography and videography for Institute events,
+        campus life, official communications and promotional content.
+      href: /media
+    - number: "03"
+      title: Audio-Visual Support
+      description: Setup and management of audio-visual equipment for seminars,
+        conferences, meetings and other Institute events.
+      href: /av-support
+    - number: "04"
+      title: Digital Communication
+      description: Support for digital newsletters, social media presence, online
+        announcements and other Institute communication channels.
+      href: /services
+highlights:
+  label: Featured
+  title: Highlights
+  subtitle: Stay updated with the latest from the Media & Website Section.
+news:
+  label: Latest Updates
+  title: Happenings
+  viewAll: View All →
+  viewAllHref: /news
+  tickerEnabled: true
+  tickerLabel: Highlights
+supportCta:
+  title: Need Media or Website Support?
+  text: Submit a request for website, audiovisual or media-related assistance.
+  buttonLabel: Submit a Request
+  buttonHref: /contact
+contact:
+  label: Get in Touch
+  title: Contact Us
+  text: For any media, website or audiovisual requirements, please reach out to us.
+  details:
+    - label: Email
+      value: media@iitpkd.ac.in
+      href: mailto:media@iitpkd.ac.in
+    - label: Organisation
+      value: Indian Institute of Technology Palakkad
+    - label: Section
+      value: Media & Website Section
+  portal:
+    title: Need Help with a Service?
+    text: For website, media or AV service requests, please use the institute support portal.
+    buttonLabel: Open Support Portal
+    buttonHref: "#"

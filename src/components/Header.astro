@@ -1,0 +1,300 @@
+---
+import { getEntry } from "astro:content";
+
+const settings = await getEntry("site-settings", "settings");
+const navLinks = settings?.data.navLinks ?? [];
+const brandInstitute = settings?.data.brandInstitute ?? "IIT Palakkad";
+const brandSection = settings?.data.brandSection ?? "Media & Website Section";
+---
+
+<header class="site-header" role="banner">
+  <div class="header-inner container">
+    <!-- Brand -->
+    <a href="/" class="brand" aria-label="Home">
+      <div class="brand-text">
+        <span class="brand-institute">{brandInstitute}</span>
+        <span class="brand-section">{brandSection}</span>
+      </div>
+    </a>
+
+    <!-- Desktop Nav -->
+    <nav class="desktop-nav" aria-label="Main navigation">
+      <ul class="nav-list" role="list">
+        {navLinks.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class:list={["nav-link", { active: link.href === Astro.url.pathname }]}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <!-- Mobile Toggle -->
+    <button
+      class="mobile-toggle"
+      aria-label="Toggle navigation"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <span class="toggle-bar"></span>
+      <span class="toggle-bar"></span>
+      <span class="toggle-bar"></span>
+    </button>
+  </div>
+
+  <!-- Mobile Nav -->
+  <nav
+    id="mobile-menu"
+    class="mobile-nav"
+    aria-label="Mobile navigation"
+    aria-hidden="true"
+  >
+    <ul class="mobile-nav-list" role="list">
+      {navLinks.map((link) => (
+        <li>
+          <a
+            href={link.href}
+            class:list={["mobile-nav-link", { active: link.href === Astro.url.pathname }]}
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.querySelector('.mobile-toggle');
+  const menu = document.querySelector('.mobile-nav');
+
+  if (toggle && menu) {
+    toggle.addEventListener('click', () => {
+      const expanded = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!expanded));
+      menu.setAttribute('aria-hidden', String(expanded));
+      toggle.classList.toggle('is-open');
+    });
+
+    menu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        toggle.setAttribute('aria-expanded', 'false');
+        menu.setAttribute('aria-hidden', 'true');
+        toggle.classList.remove('is-open');
+      });
+    });
+  }
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: var(--color-bg);
+    border-bottom: 1px solid var(--color-border-light);
+    transition: box-shadow var(--transition-base);
+  }
+
+  .site-header.scrolled {
+    box-shadow: var(--shadow-md);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--header-height);
+    transition: height var(--transition-base);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .site-header.scrolled .header-inner {
+      height: 60px;
+    }
+  }
+
+  /* Brand */
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    text-decoration: none;
+    color: var(--color-primary);
+  }
+
+  .brand:hover {
+    color: var(--color-primary);
+  }
+
+  .brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+  }
+
+  .brand-institute {
+    font-size: var(--text-xl);
+    font-weight: var(--weight-bold);
+    color: var(--color-primary);
+    letter-spacing: -0.01em;
+  }
+
+  .brand-section {
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    color: var(--color-text-muted);
+    letter-spacing: 0.02em;
+  }
+
+  /* Desktop Nav */
+  .desktop-nav {
+    display: none;
+  }
+
+  .nav-list {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+  }
+
+  .nav-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    color: var(--color-text);
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    transition: color var(--transition-fast), background-color var(--transition-fast);
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: var(--space-3);
+    right: var(--space-3);
+    bottom: 2px;
+    height: 2px;
+    border-radius: 1px;
+    background-color: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--transition-fast);
+  }
+
+  .nav-link:hover {
+    color: var(--color-accent);
+    background-color: var(--color-bg-light);
+  }
+
+  .nav-link.active {
+    color: var(--color-accent);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      transform: scaleX(1);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nav-link::after {
+      display: none;
+    }
+  }
+
+  /* Mobile Toggle */
+  .mobile-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .toggle-bar {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-primary);
+    border-radius: 1px;
+    transition: transform var(--transition-fast), opacity var(--transition-fast);
+  }
+
+  .mobile-toggle.is-open .toggle-bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .mobile-toggle.is-open .toggle-bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .mobile-toggle.is-open .toggle-bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* Mobile Nav */
+  .mobile-nav {
+    display: none;
+    border-top: 1px solid var(--color-border-light);
+    background-color: var(--color-bg);
+  }
+
+  .mobile-nav[aria-hidden="false"] {
+    display: block;
+  }
+
+  .mobile-nav-list {
+    padding: var(--space-4) var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .mobile-nav-link {
+    display: block;
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--text-base);
+    font-weight: var(--weight-medium);
+    color: var(--color-text);
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    border-left: 2px solid transparent;
+    transition: color var(--transition-fast), background-color var(--transition-fast);
+  }
+
+  .mobile-nav-link:hover,
+  .mobile-nav-link.active {
+    color: var(--color-accent);
+    background-color: var(--color-bg-light);
+    border-left-color: var(--color-accent);
+  }
+
+  @media (min-width: 769px) {
+    .desktop-nav {
+      display: block;
+    }
+
+    .mobile-toggle {
+      display: none;
+    }
+
+    .mobile-nav {
+      display: none !important;
+    }
+  }
+</style>

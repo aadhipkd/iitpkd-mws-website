@@ -1,0 +1,151 @@
+---
+import { getCollection, getEntry } from "astro:content";
+import MainLayout from "../layouts/MainLayout.astro";
+import Header from "../components/Header.astro";
+import PageHeader from "../components/PageHeader.astro";
+import Footer from "../components/Footer.astro";
+
+const gallery = await getEntry("gallery", "gallery");
+const page = await getEntry("pages", "gallery");
+const data = page?.data;
+
+const galleryCategories = gallery?.data.categories ?? ["All"];
+const galleryNote = gallery?.data.note ?? "";
+const galleryItems = (await getCollection("gallery-images")).map((item) => item.data);
+---
+
+<MainLayout title={data?.pageTitle}>
+  <Header />
+  <main>
+    <PageHeader
+      title={data?.headerTitle}
+      subtitle={data?.headerSubtitle}
+    />
+
+    <section class="section" aria-labelledby="gallery-heading">
+      <div class="container">
+        <h2 id="gallery-heading" class="sr-only">Photo gallery</h2>
+
+        <div class="gallery-filters" role="group" aria-label="Filter by category">
+          {galleryCategories.map((cat) => (
+            <span class:list={["gallery-filter", { active: cat === "All" }]}>
+              {cat}
+            </span>
+          ))}
+        </div>
+
+        <div class="gallery-grid">
+          {galleryItems.map((item) => (
+            <div class="gallery-item">
+              {item.image ? (
+                <img src={item.image} alt={item.alt} loading="lazy" class="gallery-photo" />
+              ) : (
+                <div class="gallery-placeholder" aria-hidden="true">
+                  <span class="gallery-placeholder-text">[ Image ]</span>
+                </div>
+              )}
+              <p class="gallery-caption">{item.title ?? item.alt}</p>
+            </div>
+          ))}
+        </div>
+
+        {galleryNote && (
+          <p class="gallery-note">{galleryNote}</p>
+        )}
+      </div>
+    </section>
+  </main>
+  <Footer />
+</MainLayout>
+
+<style>
+  .gallery-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-8);
+  }
+
+  .gallery-filter {
+    display: inline-block;
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    color: var(--color-text-muted);
+    background-color: var(--color-bg-light);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-sm);
+    cursor: default;
+    transition: color var(--transition-fast), border-color var(--transition-fast),
+      background-color var(--transition-fast);
+  }
+
+  .gallery-filter.active {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+    background-color: var(--color-bg);
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+
+  .gallery-item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .gallery-placeholder {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background-color: var(--color-bg-alt);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .gallery-photo {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+  }
+
+  .gallery-placeholder-text {
+    font-size: var(--text-sm);
+    color: var(--color-border);
+  }
+
+  .gallery-caption {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    margin-top: var(--space-2);
+    line-height: var(--leading-normal);
+  }
+
+  .gallery-note {
+    margin-top: var(--space-10);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    text-align: center;
+  }
+
+  @media (min-width: 520px) {
+    .gallery-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (min-width: 900px) {
+    .gallery-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+    }
+  }
+</style>

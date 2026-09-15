@@ -1,0 +1,47 @@
+siteTitle: Media & Website Section | IIT Palakkad
+siteDescription: Media and Website Section of the Indian Institute of Technology Palakkad.
+ogSiteName: IIT Palakkad — Media & Website Section
+brandInstitute: IIT Palakkad
+brandSection: Media & Website
+navLinks:
+  - label: Home
+    href: /
+  - label: About
+    href: /about
+  - label: Services
+    href: /services
+  - label: People
+    href: /people
+  - label: Gallery
+    href: /gallery
+  - label: Happenings
+    href: /news
+  - label: Contact
+    href: /contact
+footer:
+  sectionName: Media & Website Section
+  orgName: Indian Institute of Technology Palakkad
+  navLinks:
+    - label: Home
+      href: /
+    - label: About
+      href: /about
+    - label: Services
+      href: /services
+    - label: People
+      href: /people
+    - label: Media
+      href: /media
+    - label: AV Support
+      href: /av-support
+    - label: News
+      href: /news
+    - label: Gallery
+      href: /gallery
+    - label: Resources
+      href: /resources
+    - label: Contact
+      href: /contact
+  contactLabel: Email
+  contactEmail: teammedia@iitpkd.ac.in
+  copyright: Indian Institute of Technology Palakkad. All rights reserved.

@@ -1,0 +1,298 @@
+# Decap CMS configuration
+# Backend uses the local proxy for offline testing (no GitHub needed).
+# For production deployment, switch `backend` to the GitHub block (see end of file).
+
+backend:
+  name: github
+  repo: YOUR_GITHUB_USERNAME/iitpkd-mws-website
+  branch: main
+
+local_backend: true
+
+# Local development uses the decap-server proxy instead of the github backend
+# above (run: npx decap-server). The `local_backend: true` flag makes the CMS
+# use http://localhost:8081 automatically when opened via the dev server.
+
+# Media files uploaded through the CMS are stored here
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  # ------------------------------------------------------------------
+  # Site-wide settings (single file)
+  # ------------------------------------------------------------------
+  - name: "site-settings"
+    label: "Site Settings"
+    label_singular: "Site Settings"
+    description: "Site title, brand name, navigation links, footer and contact email."
+    folder: "src/content/site-settings"
+    create: false
+    slug: "{{slug}}"
+    extension: yml
+    format: yml
+    fields:
+      - { label: "Site Title (browser tab)", name: "siteTitle", widget: "string" }
+      - { label: "Site Description (SEO)", name: "siteDescription", widget: "text" }
+      - { label: "Social Media Site Name", name: "ogSiteName", widget: "string" }
+      - { label: "Brand - Institute", name: "brandInstitute", widget: "string" }
+      - { label: "Brand - Section", name: "brandSection", widget: "string" }
+      - label: "Header Navigation Links"
+        name: "navLinks"
+        widget: "list"
+        collapsed: false
+        fields:
+          - { label: "Label", name: "label", widget: "string" }
+          - { label: "URL", name: "href", widget: "string" }
+      - label: "Footer"
+        name: "footer"
+        widget: "object"
+        fields:
+          - { label: "Section Name", name: "sectionName", widget: "string" }
+          - { label: "Organisation Name", name: "orgName", widget: "string" }
+          - label: "Footer Navigation Links"
+            name: "navLinks"
+            widget: "list"
+            collapsed: false
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "URL", name: "href", widget: "string" }
+          - { label: "Contact Label", name: "contactLabel", widget: "string" }
+          - { label: "Contact Email", name: "contactEmail", widget: "string" }
+          - { label: "Copyright Text", name: "copyright", widget: "string" }
+
+  # ------------------------------------------------------------------
+  # Homepage (single file)
+  # ------------------------------------------------------------------
+  - name: "home"
+    label: "Homepage"
+    label_singular: "Homepage"
+    description: "Edit all content on the homepage: hero, quick links, about, services, highlights, news, CTA and contact blocks."
+    folder: "src/content/home"
+    create: false
+    extension: yml
+    format: yml
+    summary: "{{title}}"
+    fields:
+      - { label: "Page Title (shown in CMS list)", name: "title", widget: "string" }
+      - label: "Hero Section"
+        name: "hero"
+        widget: "object"
+        fields:
+          - { label: "Label", name: "label", widget: "string" }
+          - { label: "Headline", name: "title", widget: "text" }
+          - label: "Primary Button"
+            name: "primaryCta"
+            widget: "object"
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "URL", name: "href", widget: "string" }
+          - label: "Secondary Button"
+            name: "secondaryCta"
+            widget: "object"
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "URL", name: "href", widget: "string" }
+          - { label: "Background Image", name: "image", widget: "image", required: false }
+      - label: "Quick Links"
+        name: "quickLinks"
+        widget: "object"
+        fields:
+          - { label: "Accessible Label", name: "label", widget: "string" }
+          - label: "Links"
+            name: "items"
+            widget: "list"
+            collapsed: false
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "URL", name: "href", widget: "string" }
+              - { label: "Icon", name: "icon", widget: "select", options: ["monitor", "camera", "speaker", "megaphone"] }
+      - label: "About Section"
+        name: "about"
+        widget: "object"
+        fields:
+          - { label: "Label", name: "label", widget: "string" }
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Description", name: "text", widget: "text" }
+          - { label: "Button Label", name: "ctaLabel", widget: "string" }
+          - { label: "Button URL", name: "ctaHref", widget: "string" }
+          - label: "Statistics"
+            name: "stats"
+            widget: "list"
+            collapsed: false
+            fields:
+              - { label: "Number", name: "number", widget: "string" }
+              - { label: "Label", name: "label", widget: "string" }
+      - label: "Services Section"
+        name: "services"
+        widget: "object"
+        fields:
+          - { label: "Label", name: "label", widget: "string" }
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Subtitle", name: "subtitle", widget: "text" }
+          - label: "Service Cards"
+            name: "items"
+            widget: "list"
+            collapsed: false
+            fields:
+              - { label: "Number", name: "number", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+              - { label: "URL", name: "href", widget: "string" }
+      - label: "Highlights Section"
+        name: "highlights"
+        widget: "object"
+        fields:
+          - { label: "Label", name: "label", widget: "string" }
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Subtitle", name: "subtitle", widget: "text" }
+      - label: "Happenings Section"
+        name: "news"
+        widget: "object"
+        fields:
+          - { label: "Label", name: "label", widget: "string" }
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "View All Label", name: "viewAll", widget: "string" }
+          - { label: "View All URL", name: "viewAllHref", widget: "string" }
+          - { label: "Ticker Enabled (show scrolling strip)", name: "tickerEnabled", widget: "boolean", default: true, hint: "Uncheck to hide the scrolling headlines under the hero" }
+          - { label: "Ticker Label", name: "tickerLabel", widget: "string", default: "Latest", hint: "Small badge text, e.g. Latest" }
+      - label: "Support CTA Banner"
+        name: "supportCta"
+        widget: "object"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Text", name: "text", widget: "text" }
+          - { label: "Button Label", name: "buttonLabel", widget: "string" }
+          - { label: "Button URL", name: "buttonHref", widget: "string" }
+      - label: "Contact Section"
+        name: "contact"
+        widget: "object"
+        fields:
+          - { label: "Label", name: "label", widget: "string" }
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Text", name: "text", widget: "text" }
+          - label: "Contact Details"
+            name: "details"
+            widget: "list"
+            collapsed: false
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "Value", name: "value", widget: "string" }
+              - { label: "URL (optional)", name: "href", widget: "string", required: false }
+          - label: "Support Portal Box"
+            name: "portal"
+            widget: "object"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Text", name: "text", widget: "text", hint: "Shown next to contact details" }
+              - { label: "Button Label", name: "buttonLabel", widget: "string" }
+              - { label: "Button URL", name: "buttonHref", widget: "string", hint: "Paste full portal URL starting with https:// — use # as temporary" }
+
+  # ------------------------------------------------------------------
+  # Individual Pages (About, Services, Website, Media, AV, Contact)
+  # ------------------------------------------------------------------
+  - name: "pages"
+    label: "Pages"
+    label_singular: "Page"
+    description: "Edit the inner pages of the website (About, Services, Website Support, Media, AV Support, Contact, People)."
+    folder: "src/content/pages"
+    create: false
+    delete: false
+    extension: yml
+    format: yml
+    fields:
+      - { label: "Page Title (browser tab)", name: "pageTitle", widget: "string" }
+      - { label: "Header Title", name: "headerTitle", widget: "string" }
+      - { label: "Header Subtitle", name: "headerSubtitle", widget: "text", required: false }
+      - label: "Content Blocks"
+        name: "blocks"
+        widget: "list"
+        collapsed: false
+        fields:
+          - { label: "Type", name: "type", widget: "select", options: ["heading", "subheading", "paragraph", "list", "card", "service", "step", "guideline", "sidebar", "button", "contact", "profile"], hint: "Use button type for the support portal link on the Contact page. Use profile type for team members with photos on the People page." }
+          - { label: "Row (people page)", name: "section", widget: "string", required: false, hint: "People page: tiles with the SAME value share one row — e.g. chairman / faculty / staff. Drag to reorder within a row; change the value to move a tile to another row." }
+          - { label: "Photo (square)", name: "image", widget: "image", required: false, hint: "Square portrait, 800x800 JPG under 500KB. Empty shows initials until uploaded." }
+          - { label: "Tile Position (in row)", name: "align", widget: "select", options: ["left", "center", "right"], default: "left", required: false, hint: "Position of the tile within its row. Most useful for a tile alone in a row — e.g. center the chairman's tile. Tiles sharing a row pack in order; alignment shifts a tile within the leftover space." }
+          - { label: "Title / Number", name: "title", widget: "string", required: false }
+          - { label: "Number", name: "number", widget: "string", required: false }
+          - { label: "Icon (for service type)", name: "icon", widget: "select", options: ["monitor", "camera", "speaker", "megaphone"], required: false }
+          - { label: "Text / Description", name: "text", widget: "text", required: false }
+          - { label: "Label", name: "label", widget: "string", required: false }
+          - { label: "Value", name: "value", widget: "string", required: false }
+          - label: "List Items"
+            name: "items"
+            widget: "list"
+            required: false
+            field: { label: "Item", name: "item", widget: "string" }
+          - label: "Links"
+            name: "links"
+            widget: "list"
+            required: false
+            collapsed: false
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "URL", name: "href", widget: "string" }
+
+  # ------------------------------------------------------------------
+  # Resources (single file)
+  # ------------------------------------------------------------------
+  - name: "resources"
+    label: "Resources"
+    label_singular: "Resources"
+    description: "Edit the resource categories and their links on the Resources page."
+    folder: "src/content/resources"
+    create: false
+    extension: yml
+    format: yml
+    summary: "{{title}}"
+    fields:
+      - { label: "Page Title (shown in CMS list)", name: "title", widget: "string" }
+      - { label: "Note", name: "note", widget: "text" }
+      - label: "Resource Categories"
+        name: "categories"
+        widget: "list"
+        collapsed: false
+        fields:
+          - { label: "Category Title", name: "title", widget: "string" }
+          - { label: "Description", name: "description", widget: "string" }
+          - label: "Links"
+            name: "items"
+            widget: "list"
+            collapsed: false
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "URL", name: "href", widget: "string" }
+
+  # ------------------------------------------------------------------
+  # Gallery settings + images
+  # ------------------------------------------------------------------
+  - name: "gallery"
+    label: "Gallery Settings"
+    label_singular: "Gallery"
+    description: "Edit the gallery page subtitle, note and filter categories."
+    folder: "src/content/gallery"
+    create: false
+    extension: yml
+    format: yml
+    summary: "{{title}}"
+    fields:
+      - { label: "Page Title (shown in CMS list)", name: "title", widget: "string" }
+      - { label: "Subtitle", name: "subtitle", widget: "text" }
+      - { label: "Note", name: "note", widget: "text" }
+      - { label: "Categories (for filters)", name: "categories", widget: "list", field: { label: "Category", name: "category", widget: "string" } }
+
+  - name: "gallery-images"
+    label: "Gallery Photos"
+    label_singular: "Photo"
+    description: "Upload and manage photos shown in the gallery."
+    folder: "src/content/gallery-images"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    extension: yml
+    format: yml
+    summary: "{{title}} · {{category}}"
+    fields:
+      - { label: "Caption / Title", name: "title", widget: "string", required: false }
+      - { label: "Alt Text", name: "alt", widget: "string" }
+      - { label: "Category", name: "category", widget: "string" }
+      - { label: "Image", name: "image", widget: "image" }

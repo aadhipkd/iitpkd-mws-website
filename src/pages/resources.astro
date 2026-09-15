@@ -1,0 +1,144 @@
+---
+import { getEntry } from "astro:content";
+import MainLayout from "../layouts/MainLayout.astro";
+import Header from "../components/Header.astro";
+import PageHeader from "../components/PageHeader.astro";
+import Footer from "../components/Footer.astro";
+
+const resources = await getEntry("resources", "resources");
+const page = await getEntry("pages", "resources");
+const data = page?.data;
+
+const resourceCategories = resources?.data.categories ?? [];
+const resourcesNote = resources?.data.note ?? "";
+---
+
+<MainLayout title={data?.pageTitle}>
+  <Header />
+  <main>
+    <PageHeader
+      title={data?.headerTitle}
+      subtitle={data?.headerSubtitle}
+    />
+
+    <section class="section" aria-labelledby="resources-list">
+      <div class="container">
+        <h2 id="resources-list" class="sr-only">Resource categories</h2>
+
+        <div class="resources-grid">
+          {resourceCategories.map((category) => (
+            <div class="resource-category">
+              <h3 class="resource-category-title">{category.title}</h3>
+              <p class="resource-category-desc">{category.description}</p>
+              <ul class="resource-links">
+                {category.items.map((item) => (
+                  <li>
+                    <a href={item.href} class="resource-link">
+                      <span aria-hidden="true">&rarr;</span>
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+
+        {resourcesNote && (
+          <div class="resources-note">
+            <p>{resourcesNote}</p>
+          </div>
+        )}
+      </div>
+    </section>
+  </main>
+  <Footer />
+</MainLayout>
+
+<style>
+  .resources-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  .resource-category {
+    padding: var(--space-6);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+    border-left: 3px solid var(--color-accent);
+  }
+
+  .resource-category-title {
+    font-size: var(--text-lg);
+    font-weight: var(--weight-semibold);
+    color: var(--color-primary);
+    margin-bottom: var(--space-2);
+  }
+
+  .resource-category-desc {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-4);
+  }
+
+  .resource-links {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .resource-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    color: var(--color-accent);
+    text-decoration: none;
+    padding: var(--space-2) 0;
+    transition: color var(--transition-fast), gap var(--transition-fast);
+  }
+
+  .resource-link:hover {
+    color: var(--color-primary);
+    gap: var(--space-3);
+  }
+
+  .resources-note {
+    margin-top: var(--space-10);
+    padding: var(--space-6);
+    background-color: var(--color-bg-light);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+    text-align: center;
+  }
+
+  .resources-note p {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    line-height: var(--leading-relaxed);
+  }
+
+  .resources-note code {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    background-color: var(--color-bg-alt);
+    padding: 0.15em 0.4em;
+    border-radius: var(--radius-sm);
+  }
+
+  @media (min-width: 520px) {
+    .resources-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 900px) {
+    .resources-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

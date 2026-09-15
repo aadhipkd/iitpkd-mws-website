@@ -1,0 +1,24 @@
+---
+// Decap CMS admin UI.
+// Kept as an Astro page so the `/admin` route works in both the dev
+// server and static hosts (no directory-index confusion).
+// The CMS configuration lives in `public/admin/config.yml`.
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>Content Manager</title>
+    <!-- Tell Decap exactly where config.yml lives. Without this, Decap resolves
+         `config.yml` relative to the current URL, which 404s when the admin page
+         is served at /admin (no trailing slash). -->
+    <link rel="cms-config-url" type="text/yaml" href="/admin/config.yml" />
+  </head>
+  <body>
+    <!-- Include the script that powers Decap CMS. Served from the CDN so no
+         build step is needed and no dependencies are shipped with the site. -->
+    <script is:inline src="https://unpkg.com/decap-cms@^3.16.0/dist/decap-cms.js"></script>
+  </body>
+</html>

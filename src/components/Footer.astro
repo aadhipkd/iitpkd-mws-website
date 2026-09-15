@@ -1,0 +1,108 @@
+---
+import { getEntry } from "astro:content";
+
+const settings = await getEntry("site-settings", "settings");
+const footer = settings?.data.footer;
+const footerNav = footer?.navLinks ?? [];
+const year = new Date().getFullYear();
+const copyright = footer?.copyright ?? "Indian Institute of Technology Palakkad. All rights reserved.";
+---
+
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner container">
+    <div class="footer-grid">
+      <!-- Brand -->
+      <div class="footer-brand">
+        <p class="footer-institute">{footer?.sectionName}</p>
+        <p class="footer-org">{footer?.orgName}</p>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <ul class="footer-nav-list" role="list">
+          {footerNav.map((link) => (
+            <li><a href={link.href} class="footer-link">{link.label}</a></li>
+          ))}
+        </ul>
+      </nav>
+
+      <!-- Contact -->
+      <div class="footer-contact">
+        <p class="footer-contact-label">{footer?.contactLabel}</p>
+        <a href={`mailto:${footer?.contactEmail}`} class="footer-link">{footer?.contactEmail}</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; {year} {copyright}</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background-color: var(--color-primary-dark);
+    color: rgba(255, 255, 255, 0.7);
+    padding-top: var(--space-16);
+    padding-bottom: var(--space-8);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-10);
+    padding-bottom: var(--space-10);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .footer-institute {
+    font-size: var(--text-lg);
+    font-weight: var(--weight-bold);
+    color: var(--color-text-inverse);
+    margin-bottom: var(--space-1);
+  }
+
+  .footer-org {
+    font-size: var(--text-sm);
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .footer-nav-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-6);
+  }
+
+  .footer-link {
+    font-size: var(--text-sm);
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .footer-link:hover {
+    color: var(--color-text-inverse);
+  }
+
+  .footer-contact-label {
+    font-size: var(--text-xs);
+    font-weight: var(--weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgba(255, 255, 255, 0.4);
+    margin-bottom: var(--space-2);
+  }
+
+  .footer-bottom {
+    padding-top: var(--space-8);
+    font-size: var(--text-xs);
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  @media (min-width: 769px) {
+    .footer-grid {
+      grid-template-columns: 2fr 1.5fr 1fr;
+      gap: var(--space-12);
+    }
+  }
+</style>
