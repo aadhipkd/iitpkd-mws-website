@@ -1,0 +1,50 @@
+==== PUBLISH STEPS: GitHub Pages + Secrets ====
+Site will live at:
+https://aadhipkd.github.io/iitpkd-mws-website/
+
+Repo: https://github.com/aadhipkd/iitpkd-mws-website
+
+------------------------------------------------------------
+STEP 1: Enable GitHub Pages (one time, 4 clicks)
+------------------------------------------------------------
+1. Open:  https://github.com/aadhipkd/iitpkd-mws-website/settings/pages
+2. Under "Build and deployment", find "Source"
+3. Click the dropdown and choose:  GitHub Actions
+   (A deploy starts automatically in the Actions tab.)
+
+------------------------------------------------------------
+STEP 2: Add the two secrets (one time)
+------------------------------------------------------------
+1. Open:  https://github.com/aadhipkd/iitpkd-mws-website/settings/secrets/actions
+2. Click green button:  New repository secret
+3. Name:   NEWS_SHEET_CSV_URL
+   Secret: https://docs.google.com/spreadsheets/d/e/2PACX-1vQidmsyRIzfGne4UyhOzu2im5-aZ7ZDg6YJqYmxZUgMn7fLbZh1BOmTNj0MEDqmKX1f7pVx1B-Z40IN/pub?output=csv
+   Click "Add secret".
+4. Click  New repository secret  again
+5. Name:   HIGHLIGHTS_SHEET_CSV_URL
+   Secret: https://docs.google.com/spreadsheets/d/e/2PACX-1vSRtwfTpMLGrPDcweW2ZTqxL1RtHGrbySyYequAo0nQ92MnNn0LyFvHAj4Nh-Sm97kIcRrH4AsdmPdy/pub?output=csv
+   Click "Add secret".
+
+------------------------------------------------------------
+STEP 3: Run the first real build
+------------------------------------------------------------
+1. Open:  https://github.com/aadhipkd/iitpkd-mws-website/actions
+2. Click the workflow:  Build and Deploy to GitHub Pages
+3. Click the grey  Run workflow  button (right side)
+4. Leave branch as  main  -> click green  Run workflow
+5. Wait ~2 minutes; the dot turns green when done.
+
+------------------------------------------------------------
+STEP 4: Open your live website
+------------------------------------------------------------
+https://aadhipkd.github.io/iitpkd-mws-website/
+
+Check: home page, Happenings (2 news cards),
+Highlights (Conclave poster), People, and the CMS at
+https://aadhipkd.github.io/iitpkd-mws-website/admin
+(CMS: click "Login with GitHub", authorize, done.)
+
+------------------------------------------------------------
+AFTER THIS: reply "proceed" in the chat for the last piece
+(sheet-edit automation: Apps Script + token).
+------------------------------------------------------------
