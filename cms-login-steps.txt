@@ -1,0 +1,58 @@
+==== CMS LOGIN FIX: DecapBridge (one-time setup, ~10 minutes) ====
+
+Why this is needed: the CMS on the live site needs an authentication
+service to log people in (GitHub Pages cannot do this itself).
+DecapBridge is a free service (3 sites, 10 editors) built exactly for
+Decap CMS. Editors then log in with EMAIL / GOOGLE / MICROSOFT - no
+GitHub accounts needed. Perfect for non-technical editors.
+
+------------------------------------------------------------
+STEP 1: Create a GitHub token (one time)
+------------------------------------------------------------
+1. Open:  https://github.com/settings/personal-access-tokens/new
+2. Token name:  decapbridge-cms
+3. Expiration: 90 days (renewable later)
+4. Resource owner: aadhipkd
+5. Repository access: Only select repositories -> iitpkd-mws-website
+6. Permissions -> Repository permissions:
+   Contents:  Read and write
+   (everything else: No access)
+7. Generate token -> COPY it now (starts with github_pat_...)
+
+------------------------------------------------------------
+STEP 2: Register at DecapBridge (one time)
+------------------------------------------------------------
+1. Open:  https://decapbridge.com/auth/signup
+2. Sign up (email or "Sign up with GitHub" - your choice)
+3. In the Dashboard, click "Add site" (or similar button)
+
+------------------------------------------------------------
+STEP 3: Fill the "Add site" form (exact values)
+------------------------------------------------------------
+Git provider:      Github
+Git repository:    aadhipkd/iitpkd-mws-website
+Git access token:  PASTE the token from STEP 1
+CMS login URL:     https://aadhipkd.github.io/iitpkd-mws-website/admin/index.html
+Auth type:         PKCE   (enables "Login with Google / Microsoft")
+
+Click "Create site".
+
+------------------------------------------------------------
+STEP 4: Send me the generated config
+------------------------------------------------------------
+After creating the site, DecapBridge shows a generated config.yml
+snippet (it starts with "backend:"). Copy THAT WHOLE BLOCK and paste
+it in the chat.
+
+I will merge it into the website's CMS configuration, publish it, and
+then login will work at:
+https://aadhipkd.github.io/iitpkd-mws-website/admin/
+
+(Editors: invite them from the DecapBridge dashboard afterwards -
+"Manage collaborators" -> enter email -> they get an invite link.)
+
+------------------------------------------------------------
+NOTE
+------------------------------------------------------------
+The CMS on your LOCAL development setup keeps working as before
+(nothing changes for localhost).
